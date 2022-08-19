@@ -3,6 +3,8 @@ version: '3.9'
 services:
   postgres:
     image: postgres
+    stdin_open: true
+    tty: true
     ports:
       - '5432:5432'
     env_file:
