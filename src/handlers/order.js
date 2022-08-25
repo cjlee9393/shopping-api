@@ -44,8 +44,8 @@ const destroy = async (req, res) => {
 };
 const addProduct = async (req, res) => {
     try {
-        const quantity = req.body.quantity;
-        const orderId = req.body.orderId;
+        const orderId = req.params.id;
+        const quantity = parseInt(req.body.quantity);
         const productId = req.body.productId;
         const result = await store.addProduct(quantity, orderId, productId);
         res.json(result);
@@ -58,7 +58,7 @@ const orders_routes = (app) => {
     app.get('/orders', index);
     app.get('/orders/:id', show);
     app.post('/orders', create);
-    app.post('/orders/:id', create);
+    app.post('/orders/:id/products', addProduct);
     app.delete('/orders', destroy);
 };
 exports.default = orders_routes;

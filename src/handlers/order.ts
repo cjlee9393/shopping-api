@@ -46,9 +46,10 @@ const destroy = async (req: Request, res: Response) => {
 
 const addProduct = async (req: Request, res: Response) => {
     try{
-        const quantity = req.body.quantity
-        const orderId = req.body.orderId
-        const productId = req.body.productId
+        const orderId: string = req.params.id
+
+        const quantity: number = parseInt(req.body.quantity)
+        const productId: string = req.body.productId
 
         const result = await store.addProduct(quantity, orderId, productId)
         res.json(result)
@@ -61,7 +62,7 @@ const orders_routes = (app: express.Application) => {
 	app.get('/orders', index)
     app.get('/orders/:id', show)
     app.post('/orders', create)
-    app.post('/orders/:id', addProduct)
+    app.post('/orders/:id/products', addProduct)
     app.delete('/orders', destroy)
 }
 
