@@ -18,11 +18,26 @@ export class OrderStore {
             throw new Error(`Error: ${error}`);
         }
     }
+    async show(id: string): Promise<Order> {
+        try {
+            const sql = 'SELECT * FROM orders WHERE id=($1)'
+            // @ts-ignore
+            const conn = await Client.connect()
+    
+            const result = await conn.query(sql, [id])
+    
+            conn.release()
+    
+            return result.rows[0]
+        } catch (err) {
+            throw new Error(`Could not get article ${id}. Error: ${err}`)
+        }
+    }
     
     async create(o: Order): Promise<Order> {
         try{
             const conn = await client.connect()
-            const sql = 'INSERT INTO orders (name, price) VALUES($1, $2) RETURNING *'
+            const sql = 'INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *'
             const result = await conn.query(sql, [o.status, o.user_id])
             const order = result.rows[0]
             conn.release()

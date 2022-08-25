@@ -15,7 +15,8 @@ describe("Book Store Model", () => {
     });
     it('should index data from db', async () => {
         const rows = await store.index();
-        (0, chai_1.expect)(rows[0]).to.equal({
+        console.log(rows[0]);
+        (0, chai_1.expect)(rows[0]).to.eql({
             id: 1,
             title: 'title',
             author: 'author',
@@ -23,7 +24,6 @@ describe("Book Store Model", () => {
             type: 'type',
             summary: 'summary'
         });
-        console.log(rows[0]);
     });
     it('should create row in db', async () => {
         const result = await store.create({
@@ -34,7 +34,8 @@ describe("Book Store Model", () => {
             type: 'Evolutionary Biology',
             summary: 'The Selfish Gene is a 1976 book on evolution by the ethologist Richard Dawkins, in which the author builds upon the principal theory of George C. Williams\'s Adaptation and Natural Selection.'
         });
-        (0, chai_1.expect)(result).to.equal({
+        console.log(result);
+        (0, chai_1.expect)(result).to.eql({
             id: 2,
             title: 'The Selfish Gene',
             author: 'Richard Dawkins',
@@ -42,7 +43,6 @@ describe("Book Store Model", () => {
             type: 'Evolutionary Biology',
             summary: 'The Selfish Gene is a 1976 book on evolution by the ethologist Richard Dawkins, in which the author builds upon the principal theory of George C. Williams\'s Adaptation and Natural Selection.'
         });
-        console.log(result);
     });
     it('should delete data from db', async () => {
         await store.delete('1');

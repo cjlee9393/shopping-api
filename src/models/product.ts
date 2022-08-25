@@ -32,6 +32,22 @@ export class ProductStore {
         }
     }
 
+    async show(id: string): Promise<Product> {
+        try {
+            const sql = 'SELECT * FROM products WHERE id=($1)'
+            // @ts-ignore
+            const conn = await Client.connect()
+    
+            const result = await conn.query(sql, [id])
+    
+            conn.release()
+    
+            return result.rows[0]
+        } catch (err) {
+            throw new Error(`Could not get product ${id}. Error: ${err}`)
+        }
+    }
+
     async delete(id: string): Promise<void> {
         try{
             const conn = await client.connect()
