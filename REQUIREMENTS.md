@@ -43,5 +43,5 @@ These are the notes from a meeting with the frontend developer that describe wha
 ## Database Tables and Columns
 - products (id SERIAL PRIMARY KEY, name VARCHAR(128), price integer)
 - users (id SERIAL PRIMARY KEY, firstName VARCHAR(128), lastName VARCHAR(128), password text)
-- orders (id SERIAL PRIMARY KEY, user_id REFERENCES users(id), status VARCHAR(64))
+- orders (id SERIAL PRIMARY KEY, user_id bigint REFERENCES users(id), order_status status_type)
 - order_products (id SERIAL PRIMARY KEY, quantity integer, order_id bigint REFERENCES orders(id), product_id bigint REFERENCES products(id))
