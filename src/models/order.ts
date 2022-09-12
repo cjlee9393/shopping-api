@@ -1,9 +1,9 @@
 import client from '../database'
 
 export type Order = {
-    id : Number;
-    status : string;
-    user_id : Number;
+    id : string;
+    order_status : string;
+    user_id : string;
 }
 
 export class OrderStore {
@@ -37,8 +37,8 @@ export class OrderStore {
     async create(o: Order): Promise<Order> {
         try{
             const conn = await client.connect()
-            const sql = 'INSERT INTO orders (status, user_id) VALUES($1, $2) RETURNING *'
-            const result = await conn.query(sql, [o.status, o.user_id])
+            const sql = 'INSERT INTO orders (order_status, user_id) VALUES($1, $2) RETURNING *'
+            const result = await conn.query(sql, [o.order_status, o.user_id])
             const order = result.rows[0]
             conn.release()
             return order

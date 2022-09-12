@@ -1,7 +1,7 @@
 import client from '../database'
 
 export type Product = {
-    id : Number;
+    id : string;
     name : string;
     price : Number;
 }
@@ -14,19 +14,6 @@ export class ProductStore {
             const result = await conn.query(sql)
             conn.release()
             return result.rows
-        }catch(error: unknown){
-            throw new Error(`Error: ${error}`);
-        }
-    }
-    
-    async create(p: Product): Promise<Product> {
-        try{
-            const conn = await client.connect()
-            const sql = 'INSERT INTO products (name, price) VALUES($1, $2) RETURNING *'
-            const result = await conn.query(sql, [p.name, p.price])
-            const product = result.rows[0]
-            conn.release()
-            return product
         }catch(error: unknown){
             throw new Error(`Error: ${error}`);
         }
@@ -45,6 +32,19 @@ export class ProductStore {
             return result.rows[0]
         } catch (err) {
             throw new Error(`Could not get product ${id}. Error: ${err}`)
+        }
+    }
+    
+    async create(p: Product): Promise<Product> {
+        try{
+            const conn = await client.connect()
+            const sql = 'INSERT INTO products (name, price) VALUES($1, $2) RETURNING *'
+            const result = await conn.query(sql, [p.name, p.price])
+            const product = result.rows[0]
+            conn.release()
+            return product
+        }catch(error: unknown){
+            throw new Error(`Error: ${error}`);
         }
     }
 
