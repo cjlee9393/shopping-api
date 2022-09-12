@@ -59,5 +59,4 @@ POSTGRES_HOST_AUTH_METHOD="trust"
 POSTGRES_HOST='127.0.0.1'
 POSTGRES_USER='full_stack_user'
 POSTGRES_PASSWORD='password123'
-POSTGRES_TEST_DB='full_stack_test'
 ENV='dev'
