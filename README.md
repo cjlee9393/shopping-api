@@ -1,59 +1,120 @@
-# Storefront Backend Project
+# Image Processing API
 
-## Getting Started
+## Usage
 
-This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+1. Configure build environment
+      1. install npm packages dependencies
+         ```bash
+         # For reference, proposed set of packages with their versions are package.json file as well as in *Dependencies* section
+         npm i
+         ```
 
-## Required Technologies
-Your application must make use of the following libraries:
-- Postgres for the database
-- Node/Express for the application logic
-- dotenv from npm for managing environment variables
-- db-migrate from npm for migrations
-- jsonwebtoken from npm for working with JWTs
-- jasmine from npm for testing
+      2. Create a connection to a Postgres database
+        ```bash
+        # Run docker-compose
+        docker-compose up
+        ```
 
-## Steps to Completion
+      3. Add tables and columns according to the database schema
+        ```bash
+        # Run db-migrate
+        export ENV='dev' && db-migrate --env dev up
+        ```
 
-### 1. Plan to Meet Requirements
+2. Build typescript
+    ```bash
+    
+    npm run build
+    ```
 
-In this repo there is a `REQUIREMENTS.md` document which outlines what this API needs to supply for the frontend, as well as the agreed upon data shapes to be passed between front and backend. This is much like a document you might come across in real life when building or extending an API. 
+3. Run server and connect in browser
+    ```bash
+    # Run server with node.js
+    npm run start
 
-Your first task is to read the requirements and update the document with the following:
-- Determine the RESTful route for each endpoint listed. Add the RESTful route and HTTP verb to the document so that the frontend developer can begin to build their fetch requests.    
-**Example**: A SHOW route: 'blogs/:id' [GET] 
+    # Open Google Chrome
+    open -a 'Google Chrome'
 
-- Design the Postgres database tables based off the data shape requirements. Add to the requirements document the database tables and columns being sure to mark foreign keys.   
-**Example**: You can format this however you like but these types of information should be provided
-Table: Books (id:varchar, title:varchar, author:varchar, published_year:varchar, publisher_id:string[foreign key to publishers table], pages:number)
+    # connect to http://HostURL:3000/status
+    # connect to http://HostURL:3000/api/images?filename=fjord&width=500&height=500
+    ```
 
-**NOTE** It is important to remember that there might not be a one to one ratio between data shapes and database tables. Data shapes only outline the structure of objects being passed between frontend and API, the database may need multiple tables to store a single shape. 
+* Unit testing using Jasmine
+    ```bash
+    npm run test
+    ```
 
-### 2.  DB Creation and Migrations
+## Dependencies
 
-Now that you have the structure of the databse outlined, it is time to create the database and migrations. Add the npm packages dotenv and db-migrate that we used in the course and setup your Postgres database. If you get stuck, you can always revisit the database lesson for a reminder. 
+| Type | Description |
+| ----------- | ----------- |
+| Software | The project is tested on Google Chrome 100.0.4896.75(official build) (arm64) with javascript version 1.7. The project is tested on node.js version 16.14.2. The project is tested with packages dependencies with their versions (below the table)|
+| Firmware | No known dependency |
+| Hardware | the project is tested on MacBook Air (M1, 2020) |
 
-You must also ensure that any sensitive information is hashed with bcrypt. If any passwords are found in plain text in your application it will not pass.
+```javascript
+ "dependencies": {
+    "express": "^4.18.1",
+    "sharp": "^0.31.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/jasmine": "^4.0.3",
+    "@types/node": "^18.7.16",
+    "@types/sharp": "^0.30.5",
+    "@types/supertest": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "fs": "^0.0.1-security",
+    "jasmine": "^4.4.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "prettier": "^2.7.1",
+    "supertest": "^6.2.4",
+    "typescript": "^4.8.3"
+  }
+```
 
-### 3. Models
+## List of files
+- spec
+   - support
+      - jasmine.json
+- src
+	- assets
+      - full
+         - encenadaport.jpg
+         - fjord.jpg
+         - icelandwaterfall.jpg
+         - palmtunnel.jpg
+         - santamonica.jpg
+      - thumb
+   - tests
+      - helpers
+         - reporter.ts
+      - utilities
+         - imageSpec.ts
+      - indexSpec.ts
+   - utilities
+      - image.ts
+   - index.ts
+- .eslintrc.js
+- .gitignore
+- .prettierrc
+- .CODEOWNERS
+- LICENCE.txt
+- package.json
+- README.md
+- tsconfig.json
 
-Create the models for each database table. The methods in each model should map to the endpoints in `REQUIREMENTS.md`. Remember that these models should all have test suites and mocks.
+## License
 
-### 4. Express Handlers
+[License](LICENSE.txt)
 
-Set up the Express handlers to route incoming requests to the correct model method. Make sure that the endpoints you create match up with the enpoints listed in `REQUIREMENTS.md`. Endpoints must have tests and be CORS enabled. 
-
-### 5. JWTs
-
-Add JWT functionality as shown in the course. Make sure that JWTs are required for the routes listed in `REQUIUREMENTS.md`.
-
-### 6. QA and `README.md`
-
-Before submitting, make sure that your project is complete with a `README.md`. Your `README.md` must include instructions for setting up and running your project including how you setup, run, and connect to your database. 
-
-Before submitting your project, spin it up and test each endpoint. If each one responds with data that matches the data shapes from the `REQUIREMENTS.md`, it is ready for submission!
-
-### 7. .env
+## .env
 POSTGRES_DB="full_stack_dev"
 POSTGRES_HOST_AUTH_METHOD="trust"
 POSTGRES_HOST='127.0.0.1'
