@@ -13,11 +13,8 @@
         ```bash
         # Run docker-compose
         docker-compose up
-        ```
 
-      3. Add tables and columns according to the database schema
-        ```bash
-        # Run db-migrate
+        # Add tables and columns according to the database schema
         export ENV='dev' && db-migrate --env dev up
         ```
 
