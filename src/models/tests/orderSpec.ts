@@ -1,4 +1,4 @@
-import { Order, OrderStore } from '../order';
+import { Order, OrderProduct, OrderStore } from '../order';
 import { User, UserStore } from '../user';
 import { Product, ProductStore } from '../product';
 import { expect } from 'chai';
@@ -32,26 +32,62 @@ describe("Order Store Model", () => {
             username: 'username',
             password: 'password_digest',
         });
+        const userId = userResult.id;
 
-        const user_id = userResult.id;
+        // test create
+        const orderStatus = 'active';
+        const orderResult = await orderStore.create({
+            id: '',
+            order_status: orderStatus,
+            user_id: userId as string
+        });
+ 
+        expect(orderResult.order_status).to.equal(orderStatus);
+
+        // test index
+        let orderRows = await orderStore.index();
+        expect(orderRows[0].order_status).to.equal(orderStatus);
+
+        // test delete
+        let orderId = orderRows[0].id;
+        await orderStore.delete(`${orderId}`);
+        orderRows = await orderStore.index();
+        if (orderRows.length) expect(orderRows[0].id).to.not.be.oneOf([orderId]);   
+
+        await userStore.delete(`${userId}`);
+    });
+
+    it('should add product to order', async () => {
+        const userResult = await userStore.create({
+            id: '',
+            first_name: 'first_name',
+            last_name: 'last_name',
+            username: 'username',
+            password: 'password_digest',
+        });
+        const userId = userResult.id;
 
         const orderResult = await orderStore.create({
             id: '',
             order_status: 'active',
-            user_id: user_id as string
+            user_id: userId as string
         });
-
         const orderId = orderResult.id;
-        let orderRows = await orderStore.index();
 
-        expect(orderRows[0].id).to.equal(orderId);
+        const productResult = await productStore.create({
+            id: '',
+            name: 'name',
+            price: 0
+        });
+        const productId = productResult.id;
 
-        await orderStore.delete(`${orderRows[0].id}`);
+        const quantity = 1;
+        const addProductResult = await orderStore.addProduct(quantity, orderId, productId);
+        expect(addProductResult.quantity).to.equal(quantity);
 
-        orderRows = await orderStore.index();
-
-        if (orderRows.length) expect(orderRows[0].id).to.not.be.oneOf([orderId]);   
-
-        await userStore.delete(`${user_id}`);
+        const orderProductId = addProductResult.id;
+        await orderStore.delProduct(`${orderProductId}`);
+        await orderStore.delete(`${orderId}`); 
+        await userStore.delete(`${userId}`);
     });
 });

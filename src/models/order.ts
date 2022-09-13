@@ -6,6 +6,13 @@ export type Order = {
     user_id : string;
 }
 
+export type OrderProduct = {
+    id : string,
+    quantity: number,
+    order_id: string,
+    product_id: number
+}
+
 export class OrderStore {
     async index(): Promise<Order[]> {
         try{
@@ -58,7 +65,7 @@ export class OrderStore {
         }
     }
 
-    async addProduct(quantity: number, orderId: string, productId: string): Promise<Order> {
+    async addProduct(quantity: number, orderId: string, productId: string): Promise<OrderProduct> {
         try{
             const conn = await client.connect()
             const sql = 'INSERT INTO order_products (quantity, order_id, product_id) VALUES($1, $2, $3) RETURNING *'
@@ -66,6 +73,17 @@ export class OrderStore {
             const orderProduct = result.rows[0]
             conn.release()
             return orderProduct
+        }catch(error: unknown){
+            throw new Error(`Error: ${error}`);
+        }
+    }
+
+    async delProduct(id: string): Promise<void> {
+        try{
+            const conn = await client.connect()
+            const sql = 'DELETE FROM order_products WHERE id=($1)'
+            const result = await conn.query(sql, [id])
+
         }catch(error: unknown){
             throw new Error(`Error: ${error}`);
         }
