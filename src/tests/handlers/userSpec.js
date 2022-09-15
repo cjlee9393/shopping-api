@@ -35,7 +35,7 @@ describe('Users API Endpoints', () => {
         });
     });
     it('Index: \'users\' [GET] should get data from db', (done) => {
-        const firstName = 'firstName'; // added in data.sql
+        const firstName = 'first_name'; // added in data.sql
         request
             .get('/users')
             .set('Authorization', `bearer ${token_auth}`)

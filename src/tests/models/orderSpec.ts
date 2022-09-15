@@ -89,4 +89,16 @@ describe("Order Store Model", () => {
         await orderStore.delete(`${orderId}`); 
         await userStore.delete(`${userId}`);
     });
+
+    it('should show current order by user', async () => {
+        const userId = '1'; // added in data.sql
+        const orderStatus = 'active'
+
+        const rows = await orderStore.showCurrentOrderByUser(userId);
+
+        for (let row of rows){
+            expect(row.user_id).to.be.equal(userId)
+            expect(row.order_status).to.be.equal(orderStatus)
+        }
+    });
 });

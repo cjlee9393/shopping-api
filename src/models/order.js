@@ -77,5 +77,18 @@ class OrderStore {
             throw new Error(`Error: ${error}`);
         }
     }
+    async showCurrentOrderByUser(id) {
+        try {
+            const sql = 'SELECT * FROM orders WHERE user_id=($1) AND order_status=\'active\'';
+            // @ts-ignore
+            const conn = await database_1.default.connect();
+            const result = await conn.query(sql, [id]);
+            conn.release();
+            return result.rows;
+        }
+        catch (err) {
+            throw new Error(`Could not get current order by user ${id}. Error: ${err}`);
+        }
+    }
 }
 exports.OrderStore = OrderStore;

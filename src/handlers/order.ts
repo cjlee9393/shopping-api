@@ -59,6 +59,15 @@ const addProduct = async (req: Request, res: Response) => {
     }
 }
 
+/*const showCurrentOrderByUser = async (req: Request, res: Response) => {
+    try{
+        const order = await store.show(req.params.id);
+        res.json(order);
+    }catch(err){
+        res.status(400).json(err);
+    }
+}*/
+
 const orders_routes = (app: express.Application) => {
 	app.get('/orders', index)
     app.get('/orders/:id', show)
