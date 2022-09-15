@@ -19,17 +19,35 @@
 
    2. setup npm packages dependencies and setup a connection to a Postgres database
       ```bash
+      # setup npm packages dependencies
       npm i
+      npm i -g db-migrate
+
+      # setup Postgres database
+      docker-compose up -d
+
+      # setup connection to Postgres database
+      chmod 775 ./setup-connection.sh 
+      ./setup-connection.sh
       ```
 
    3. running the project
       ```bash
+      # build the project
+      npm run build
+
+      # run the project
       npm run start
       ```
+
 2. instructions for unit testing using Jasmine
-    ```bash
-    npm run test
-    ```
+   ```bash
+   # build the project
+   npm run build
+
+   # test the project
+   npm run test
+   ```
 
 ## Sample URLs for API Endpoints
 - see REQUIREMENTS.md for API Endpoints
