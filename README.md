@@ -46,12 +46,12 @@
    # export ENV variables
    export $(cat .env | xargs)
 
-   docker exec -it $(docker ps --format \"{{.Names}}\") psql -U ${POSTGRES_USER} ${POSTGRES_DB}
+   docker exec -it $(docker ps --format "{{.Names}}") psql -U ${POSTGRES_USER} ${POSTGRES_DB}
    ```
 
    2. create the database (continued)
    ```sql
-   CREATE DATABASE full_stack_test
+   CREATE DATABASE full_stack_test;
    ```
 
    3. run unit testing

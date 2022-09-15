@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "start": "node build/server",
     "pretest": "export $(cat .env | xargs)",
-    "test": "export ENV='test' && db-migrate --env test up && docker container exec -i $(docker ps --format \"{{.Names}}\") psql -U ${POSTGRES_USER} ${POSTGRES_DB} < data.sql && jasmine && db-migrate --env test --count 10 down"
+    "test": "export ENV='test' && db-migrate --env test up && docker container exec -i $(docker ps --format '{{.Names}}') psql -U ${POSTGRES_USER} ${POSTGRES_DB} < data.sql && jasmine && db-migrate --env test --count 10 down"
   },
   "author": "Udacity",
   "license": "ISC",
