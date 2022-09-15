@@ -20,6 +20,8 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Current Order by user (args: user id)[token required]: 'orders/:id' [GET]
 - [OPTIONAL] Completed Orders by user (args: user id)[token required]
 
+* [token required]: bearer token, see TOKEN_AUTH in *.env* in README.md
+
 ## Data Shapes
 #### Product
 - id
