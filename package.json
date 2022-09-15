@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "preprepare": "docker-compose up &",
-    "prepare": "export ENV='dev' && db-migrate --env dev up",
-    "postprepare": "docker container exec -i shopping-api_postgres_1 psql -U full_stack_user full_stack_dev < data.sql",
+    "prepare": "docker-compose up -d",
+    "postprepare": "chmod 775 ./setup-connection.sh && ./setup-connection.sh",
     "prestart": "npx tsc",
     "start": "node build/server",
     "test": "jasmine"
