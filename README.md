@@ -2,7 +2,7 @@
 
 ## Usage
 
-1. Configure build environment
+1. instructions for setup and running the project
       1. install npm packages dependencies
          ```bash
          # For reference, proposed set of packages with their versions are package.json file as well as in *Dependencies* section

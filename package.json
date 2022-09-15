@@ -4,12 +4,11 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "start": "node src/server",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "jasmine-ts",
+    "start": "node build/server",
+    "test": "jasmine",
     "up": "export ENV='dev' && db-migrate --env dev up && docker container exec -i shopping-api_postgres_1 psql -U full_stack_user full_stack_dev < data.sql",
     "down": "db-migrate --env dev --count 10 down",
-    "tsc": "tsc"
+    "build": "npx tsc"
   },
   "author": "Udacity",
   "license": "ISC",
@@ -34,7 +33,7 @@
     "@types/supertest": "^2.0.12",
     "chai": "^4.3.6",
     "jasmine": "^3.6.4",
-    "jasmine-spec-reporter": "^6.0.0",
+    "jasmine-spec-reporter": "^7.0.0",
     "jasmine-ts": "^0.3.0",
     "supertest": "^6.2.4",
     "ts-node": "^10.6.0",
