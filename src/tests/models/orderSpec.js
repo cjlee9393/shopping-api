@@ -76,6 +76,7 @@ describe("Order Store Model", () => {
         const userId = '1'; // added in data.sql
         const orderStatus = 'active';
         const rows = await orderStore.showCurrentOrderByUser(userId);
+        console.log(rows);
         for (let row of rows) {
             (0, chai_1.expect)(row.user_id).to.be.equal(userId);
             (0, chai_1.expect)(row.order_status).to.be.equal(orderStatus);

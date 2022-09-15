@@ -96,6 +96,8 @@ describe("Order Store Model", () => {
 
         const rows = await orderStore.showCurrentOrderByUser(userId);
 
+        console.log(rows);
+
         for (let row of rows){
             expect(row.user_id).to.be.equal(userId)
             expect(row.order_status).to.be.equal(orderStatus)

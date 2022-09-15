@@ -59,21 +59,21 @@ const addProduct = async (req: Request, res: Response) => {
     }
 }
 
-/*const showCurrentOrderByUser = async (req: Request, res: Response) => {
+const showCurrentOrderByUser = async (req: Request, res: Response) => {
     try{
-        const order = await store.show(req.params.id);
-        res.json(order);
+        const result = await store.showCurrentOrderByUser(req.params.id);
+        res.json(result);
     }catch(err){
         res.status(400).json(err);
     }
-}*/
+}
 
 const orders_routes = (app: express.Application) => {
-	app.get('/orders', index)
-    app.get('/orders/:id', show)
-    app.post('/orders', create)
-    app.post('/orders/:id/products', addProduct)
-    app.delete('/orders', destroy)
+	// app.get('/orders', index)
+    app.get('/orders/:id', verifyAuthToken, showCurrentOrderByUser)
+    // app.post('/orders', create)
+    // app.post('/orders/:id/products', addProduct)
+    // app.delete('/orders', destroy)
 }
 
 export default orders_routes

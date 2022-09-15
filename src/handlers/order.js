@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const order_1 = require("../models/order");
+const user_1 = require("./user");
 const store = new order_1.OrderStore();
 const index = async (_req, res) => {
     try {
@@ -54,19 +55,20 @@ const addProduct = async (req, res) => {
         res.status(400).json(err);
     }
 };
-/*const showCurrentOrderByUser = async (req: Request, res: Response) => {
-    try{
-        const order = await store.show(req.params.id);
-        res.json(order);
-    }catch(err){
+const showCurrentOrderByUser = async (req, res) => {
+    try {
+        const result = await store.showCurrentOrderByUser(req.params.id);
+        res.json(result);
+    }
+    catch (err) {
         res.status(400).json(err);
     }
-}*/
+};
 const orders_routes = (app) => {
-    app.get('/orders', index);
-    app.get('/orders/:id', show);
-    app.post('/orders', create);
-    app.post('/orders/:id/products', addProduct);
-    app.delete('/orders', destroy);
+    // app.get('/orders', index)
+    app.get('/orders/:id', user_1.verifyAuthToken, showCurrentOrderByUser);
+    // app.post('/orders', create)
+    // app.post('/orders/:id/products', addProduct)
+    // app.delete('/orders', destroy)
 };
 exports.default = orders_routes;
