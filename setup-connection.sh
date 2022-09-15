@@ -9,6 +9,9 @@ else
   exit 100
 fi
 
+# install db-migrate
+npm install -g db-migrate
+
 # create tables and columns to a Postgres database
 export ENV='dev' && db-migrate --env dev up
 
