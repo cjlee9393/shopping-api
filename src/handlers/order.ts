@@ -1,5 +1,6 @@
 import { Order, OrderStore } from '../models/order'
 import express, { Request, Response } from 'express'
+import { verifyAuthToken } from './user'
 
 const store = new OrderStore()
 
@@ -24,11 +25,11 @@ const show = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
     try{
         const order = {
-            status: req.body.status,
+            order_status: req.body.status,
             user_id: req.body.user_id
         };
 
-        const result = await store.create(order as Order)
+        const result = await store.create((order as Order))
         res.json(result)
     }catch(err){
         res.status(400).json(err);

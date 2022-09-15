@@ -23,7 +23,7 @@ const show = async (req, res) => {
 const create = async (req, res) => {
     try {
         const order = {
-            status: req.body.status,
+            order_status: req.body.status,
             user_id: req.body.user_id
         };
         const result = await store.create(order);

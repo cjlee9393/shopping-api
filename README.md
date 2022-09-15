@@ -14,32 +14,34 @@
         # Run docker-compose
         docker-compose up
 
-        # Add tables and columns according to the database schema
-        export ENV='dev' && db-migrate --env dev up
+        # Add tables and sample data to the database
+        npm run up
         ```
 
 2. Build typescript
     ```bash
-    
-    npm run build
+    npm run tsc
     ```
 
 3. Run server and connect in browser
     ```bash
     # Run server with node.js
     npm run start
-
-    # Open Google Chrome
-    open -a 'Google Chrome'
-
-    # connect to http://HostURL:3000/status
-    # connect to http://HostURL:3000/api/images?filename=fjord&width=500&height=500
     ```
 
-* Unit testing using Jasmine
+4. Access the endpoints
+   1. http://HostURL:3000/status [GET]
+   2. http://HostURL:3000/api/images [GET] (query parameters: filename, width, height)
+      - example: http://HostURL:3000/api/images?filename=fjord&width=500&height=500
+
+5. Unit testing using Jasmine
     ```bash
     npm run test
     ```
+
+## API Endpoints
+- Status: 'status' [GET]
+- Resize: 'api/images' [GET] (query parameters: filename, width, height)
 
 ## Dependencies
 

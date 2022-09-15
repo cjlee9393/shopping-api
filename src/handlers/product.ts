@@ -1,5 +1,6 @@
 import { Product, ProductStore } from '../models/product'
 import express, { Request, Response } from 'express'
+import { verifyAuthToken } from './user'
 
 const store = new ProductStore()
 
@@ -17,6 +18,7 @@ const show = async (req: Request, res: Response) => {
         const product = await store.show(req.params.id);
         res.json(product);
     }catch(err){
+        console.log(err)
         res.status(400).json(err);
     }
 }
@@ -29,7 +31,7 @@ const create = async (req: Request, res: Response) => {
         };
 
         const result = await store.create(product as Product)
-        res.json(result)
+        res.status(201).json(result)
     }catch(err){
         res.status(400).json(err);
     }
@@ -47,7 +49,7 @@ const destroy = async (req: Request, res: Response) => {
 const products_routes = (app: express.Application) => {
 	app.get('/products', index)
     app.get('/products/:id', show)
-    app.post('/products', create)
+    app.post('/products', verifyAuthToken, create)
     app.delete('/products', destroy)
 }
 

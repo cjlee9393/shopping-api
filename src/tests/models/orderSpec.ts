@@ -1,6 +1,6 @@
-import { Order, OrderProduct, OrderStore } from '../order';
-import { User, UserStore } from '../user';
-import { Product, ProductStore } from '../product';
+import { OrderStore } from '../../models/order';
+import { UserStore } from '../../models/user';
+import { ProductStore } from '../../models/product';
 import { expect } from 'chai';
 
 const orderStore = new OrderStore()
@@ -24,18 +24,10 @@ describe("Order Store Model", () => {
         expect(orderStore.delete).to.not.be.undefined;
     });
 
-    it('should create, index, and delete data from db', async () => {
-        const userResult = await userStore.create({
-            id: '',
-            first_name: 'first_name',
-            last_name: 'last_name',
-            username: 'username',
-            password: 'password_digest',
-        });
-        const userId = userResult.id;
+    it('should create data to db', async () => {
+        const userId = '1' // added from data.sql
+        const orderStatus = 'complete';
 
-        // test create
-        const orderStatus = 'active';
         const orderResult = await orderStore.create({
             id: '',
             order_status: orderStatus,
@@ -43,18 +35,25 @@ describe("Order Store Model", () => {
         });
  
         expect(orderResult.order_status).to.equal(orderStatus);
+    });
 
-        // test index
+    it('should index data from db', async () => {
+        const userId = '1' // added from data.sql
+
         let orderRows = await orderStore.index();
-        expect(orderRows[0].order_status).to.equal(orderStatus);
+        expect(orderRows[0].user_id).to.equal(userId);
+    });
 
-        // test delete
-        let orderId = orderRows[0].id;
+    it('should delete data from db', async () => {
+        let orderId = '2' // added from data.sql
+
         await orderStore.delete(`${orderId}`);
-        orderRows = await orderStore.index();
-        if (orderRows.length) expect(orderRows[0].id).to.not.be.oneOf([orderId]);   
 
-        await userStore.delete(`${userId}`);
+        const orderRows = await orderStore.index();
+
+        for (let orderRow of orderRows){
+            expect(orderRow.id).to.not.be.oneOf([orderId])
+        }
     });
 
     it('should add product to order', async () => {
