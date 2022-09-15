@@ -17,6 +17,15 @@ if (ENV == 'dev'){
     })
 }
 
+if (ENV == 'test'){
+    client = new Pool({
+        host: POSTGRES_HOST,
+        database: POSTGRES_TEST_DB,
+        user: POSTGRES_USER,
+        password: POSTGRES_PASSWORD,
+    })
+}
+
 // console.log(client);
 /*
 client.query('SELECT * FROM myTable', (error, results) => {

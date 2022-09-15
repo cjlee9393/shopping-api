@@ -10,6 +10,7 @@
       echo 'POSTGRES_HOST="127.0.0.1"' >> .env
       echo 'POSTGRES_USER="full_stack_user"' >> .env
       echo 'POSTGRES_PASSWORD="password123"' >> .env
+      echo 'POSTGRES_TEST_DB="full_stack_test"' >> .env
       echo 'ENV="dev"' >> .env
       echo 'BCRYPT_PASSWORD="speak-friend-and-enter"' >> .env
       echo 'SALT_ROUNDS=10' >> .env
@@ -27,8 +28,7 @@
       docker-compose up -d
 
       # setup connection to Postgres database
-      chmod 775 ./setup-connection.sh 
-      ./setup-connection.sh
+      export ENV='dev' && db-migrate --env dev up
       ```
 
    3. running the project
@@ -41,6 +41,20 @@
       ```
 
 2. instructions for unit testing using Jasmine
+   1. create the database
+   ```bash
+   # export ENV variables
+   export $(cat .env | xargs)
+
+   docker exec -it $(docker ps --format \"{{.Names}}\") psql -U ${POSTGRES_USER} ${POSTGRES_DB}
+   ```
+
+   2. create the database (continued)
+   ```sql
+   CREATE DATABASE full_stack_test
+   ```
+
+   3. run unit testing
    ```bash
    # build the project
    npm run build
