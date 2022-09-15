@@ -1,4 +1,7 @@
 # Shopping-API
+This API allows you to reserve a shopping order.
+
+The API will be available at http://hostUrl:3000 after running the project
 
 ## Usage
 

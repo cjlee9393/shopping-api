@@ -1,18 +1,40 @@
 # API Endpoints
+#### [token required]: bearer token, see TOKEN_AUTH in *.env* in README.md
 ## Products
-- Index: 'products' [GET]
-- Show: 'products/:id' [GET]
-- Create [token required]: 'products' [POST]
+- Index
+    - 'products' [GET]
+    - Returns the list of products.
+- Show
+    - 'products/:id' [GET]
+    - Returns a product.
+- Create [token required]
+    - 'products' [POST]
+    - Allows you to submit a new product.
+    - The request body needs to be in JSON format and include the following properties:
+        - name - String - required
+        - price - Integer - required
 
 ## Users
-- Index [token required]: 'users' [GET]
-- Show [token required]: 'users/:id' [GET]
-- Create New [token required]: 'users' [POST]
+- Index [token required]
+    - 'users' [GET]
+    - Returns the list of users.
+- Show [token required]
+    - 'users/:id' [GET]
+    - Returns a user.
+- Create [token required]
+    - 'users' [POST]
+    - Allows you to submit a new product.
+    - The request body needs to be in JSON format and include the following properties:
+        - first_name - String - required
+        - last_name - String - required
+        - username - String - required
+        - password - String - required
 
 ## Orders
-- Current Order by user (args: user id)[token required]: 'orders/:id' [GET]
-
-#### [token required]: bearer token, see TOKEN_AUTH in *.env* in README.md
+- Current Order by user [token required]
+    - 'orders/:id' [GET]
+    - Allows you to retrieve current order by user.
+    - The path parameter requires user id.
 
 # Data Shapes
 ## Product
