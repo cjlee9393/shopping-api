@@ -33,19 +33,9 @@
 
 ## Sample URLs for API Endpoints
 - see REQUIREMENTS.md for API Endpoints
-#### Products
-- Index: http://HostURL:3000/products
-- Show: http://HostURL:3000/products/1
-
-#### Users
-- Index http://HostURL:3000/users
-- Show [token required]: 'users/:id' [GET]
-- Create New [token required]: 'users' [POST]
-
-#### Orders
-- Current Order by user (args: user id)[token required]: 'orders/:id' [GET]
-
-
+   ### Products
+   - Index: http://HostURL:3000/products
+   - Show: http://HostURL:3000/products/1
 
 ## Ports
 - backend : 3000 (see src/server.ts)

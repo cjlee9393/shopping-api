@@ -4,10 +4,12 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "prepare": "docker-compose up -d",
-    "postprepare": "chmod 775 ./setup-connection.sh && ./setup-connection.sh",
+    "preprepare": "docker-compose up -d",
+    "prepare": "chmod 775 ./setup-connection.sh && ./setup-connection.sh",
+    "postprepare": "npx tsc",
     "prestart": "npx tsc",
     "start": "node build/server",
+    "pretest": "npx tsc",
     "test": "jasmine"
   },
   "author": "Udacity",
