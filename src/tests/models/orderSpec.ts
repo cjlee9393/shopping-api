@@ -63,6 +63,8 @@ describe("Order Store Model", () => {
         const quantity = 1;
         const addProductResult = await orderStore.addProduct(quantity, orderId, productId);
         expect(addProductResult.quantity).to.equal(quantity);
+        expect(addProductResult.order_id).to.equal(orderId);
+        expect(addProductResult.product_id).to.equal(productId);
     });
 
     it('should del product from order', async () => {

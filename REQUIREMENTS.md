@@ -51,6 +51,24 @@
     ```
 
 ## Orders
+- Add product to order [token required]
+    - `/orders/addProduct` [POST]
+    - Allows you to submit a new product and quantity to order.
+    - The request body needs to be in JSON format and include the following properties:
+        - quantity - Integer - required
+        - order_id - Integer - required
+        - product_id - Integer - required
+    ```
+    POST /orders/addProduct
+    Authorization: Bearer <TOKEN_AUTH>
+
+    {
+        "quantity": "1",
+        "order_id": "1",
+        "product_id": "1"
+    }
+    ```
+
 - Current Order by user [token required]
     - `/orders/:id` [GET]
     - Allows you to retrieve current order by user.

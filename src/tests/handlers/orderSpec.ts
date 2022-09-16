@@ -45,6 +45,8 @@ describe('Orders API Endpoints', () => {
             .expect(201)
             .then((res) => {
                 expect(res.body.quantity).to.be.equal(+quantity)
+                expect(res.body.order_id).to.be.equal(orderId)
+                expect(res.body.product_id).to.be.equal(productId)
                 return done()
             })
             .catch((err) => {

@@ -60,11 +60,10 @@ const destroy = async (req: Request, res: Response) => {
 
 const addProduct = async (req: Request, res: Response) => {
     try{
-        const orderId: string = req.params.id
-
         const quantity: number = parseInt(req.body.quantity)
-        const productId: string = req.body.productId
-
+        const orderId: string = req.body.order_id
+        const productId: string = req.body.product_id
+        
         const result = await store.addProduct(quantity, orderId, productId)
         res.status(201).json(result)
     }catch(err){
