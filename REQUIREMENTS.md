@@ -32,7 +32,8 @@
     - Returns a user.
 - Create [token required]
     - `/users` [POST]
-    - Allows you to submit a new product.
+    - Allows you to submit a new user.
+    - Returns an authorization token
     - The request body needs to be in JSON format and include the following properties:
         - first_name - String - required
         - last_name - String - required
