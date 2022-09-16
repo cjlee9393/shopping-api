@@ -18,8 +18,8 @@
     Authorization: Bearer <TOKEN_AUTH>
 
     {
-        "name": "foobar",
-        "price": 64
+        "name": "french fries",
+        "price": 50
     }
     ```
 
