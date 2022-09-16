@@ -2,37 +2,57 @@
 #### [token required]: bearer token, see TOKEN_AUTH in *.env* in README.md
 ## Products
 - Index
-    - 'products' [GET]
+    - `/products` [GET]
     - Returns the list of products.
 - Show
-    - 'products/:id' [GET]
+    - `/products/:id` [GET]
     - Returns a product.
 - Create [token required]
-    - 'products' [POST]
+    - `/products` [POST]
     - Allows you to submit a new product.
     - The request body needs to be in JSON format and include the following properties:
         - name - String - required
         - price - Integer - required
+    ```
+    POST /products
+    Authorization: Bearer <TOKEN_AUTH>
+
+    {
+    "name": "foobar",
+    "price": 64
+    }
+    ```
 
 ## Users
 - Index [token required]
-    - 'users' [GET]
+    - `/users` [GET]
     - Returns the list of users.
 - Show [token required]
-    - 'users/:id' [GET]
+    - `/users/:id` [GET]
     - Returns a user.
 - Create [token required]
-    - 'users' [POST]
+    - `/users` [POST]
     - Allows you to submit a new product.
     - The request body needs to be in JSON format and include the following properties:
         - first_name - String - required
         - last_name - String - required
         - username - String - required
         - password - String - required
+    ```
+    POST /users
+    Authorization: Bearer <TOKEN_AUTH>
+
+    {
+    "first_name": "foo",
+    "last_name": "bar",
+    "username": "foobar",
+    "password": "baz"
+    }
+    ```
 
 ## Orders
 - Current Order by user [token required]
-    - 'orders/:id' [GET]
+    - `/orders/:id` [GET]
     - Allows you to retrieve current order by user.
     - The path parameter requires user id.
 
