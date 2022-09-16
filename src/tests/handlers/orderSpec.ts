@@ -30,7 +30,7 @@ describe('Orders API Endpoints', () => {
     })
 
     it('Add product to order: \'orders/addProduct\' [POST] should create data to db', (done) => {
-        const quantity = '1'
+        const quantity = '0'
         const orderId = '1' // already added in data.sql
         const productId = '1'
 
@@ -56,16 +56,21 @@ describe('Orders API Endpoints', () => {
 
     it('Current Order by user \'orders/:id\' [GET] should get current order by user from db', (done) => {
         const userId = '1'; // added in data.sql
-        const orderStatus = 'active'
+        const name = 'name'
+        const price = 0
+        const quantity = 0
 
         request
             .get(`/orders/${userId}`)
             .set('Authorization', `bearer ${token_auth}`)
             .expect(200)
             .then((res) => {
-                for (let row of res.body){
-                    expect(row.user_id).to.be.equal(userId)
-                    expect(row.order_status).to.be.equal(orderStatus)
+                for (let rows of res.body){
+                    for (let row of rows){
+                        expect(row.name).to.be.equal(name)
+                        expect(row.price).to.be.equal(price)
+                        expect(row.quantity).to.be.equal(quantity)
+                    }
                 }
                 return done()
             })

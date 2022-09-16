@@ -89,17 +89,26 @@ export class OrderStore {
         }
     }
 
-    async showCurrentOrderByUser(id: string): Promise<Order[]> {
-        try {
-            const sql = 'SELECT * FROM orders WHERE user_id=($1) AND order_status=\'active\''
-            // @ts-ignore
+    async showCurrentOrderByUser(id: string): Promise<any[][]> {
+        try{
+            const results = []
+
+            // get array of order_id from user_id 
+            const sql = 'SELECT user_id FROM orders WHERE user_id=($1) AND order_status=\'active\''
+
             const conn = await client.connect()
-    
+
             const result = await conn.query(sql, [id])
-    
-            conn.release()
-    
-            return result.rows
+
+            for (let row of result.rows){
+                const sql = 'SELECT products.name, products.price, order_products.quantity FROM order_products INNER JOIN products ON order_products.product_id=products.id WHERE order_products.order_id=($1)'
+                
+                const result = await conn.query(sql, [row.user_id])
+
+                results.push(result.rows)
+            }
+
+            return results;
         } catch (err) {
             throw new Error(`Could not get current order by user ${id}. Error: ${err}`)
         }

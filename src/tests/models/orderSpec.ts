@@ -60,7 +60,7 @@ describe("Order Store Model", () => {
         const orderId = '1';
         const productId = '1';
 
-        const quantity = 1;
+        const quantity = 0;
         const addProductResult = await orderStore.addProduct(quantity, orderId, productId);
         expect(addProductResult.quantity).to.equal(quantity);
         expect(addProductResult.order_id).to.equal(orderId);
@@ -80,13 +80,18 @@ describe("Order Store Model", () => {
 
     it('should show current order by user', async () => {
         const userId = '1'; // added in data.sql
-        const orderStatus = 'active'
+        const name = 'name'
+        const price = 0
+        const quantity = 0
 
-        const rows = await orderStore.showCurrentOrderByUser(userId);
+        const arrs = await orderStore.showCurrentOrderByUser(userId);
 
-        for (let row of rows){
-            expect(row.user_id).to.be.equal(userId)
-            expect(row.order_status).to.be.equal(orderStatus)
+        for (let rows of arrs){
+            for (let row of rows){
+                expect(row.name).to.be.equal(name)
+                expect(row.price).to.be.equal(price)
+                expect(row.quantity).to.be.equal(quantity)
+            }
         }
     });
 });
