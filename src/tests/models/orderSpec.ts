@@ -1,7 +1,7 @@
 import { OrderStore } from '../../models/order';
 import { UserStore } from '../../models/user';
 import { ProductStore } from '../../models/product';
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 
 const orderStore = new OrderStore()
 const userStore = new UserStore()
@@ -63,6 +63,17 @@ describe("Order Store Model", () => {
         const quantity = 1;
         const addProductResult = await orderStore.addProduct(quantity, orderId, productId);
         expect(addProductResult.quantity).to.equal(quantity);
+    });
+
+    it('should del product from order', async () => {
+        const orderProductId = '-15';
+
+        try{
+            await orderStore.delProduct(orderProductId);
+        }catch(err){
+            console.log('assert.fail()')
+            assert.fail(0, 1, 'Error is thrown')
+        }
     });
 
     it('should show current order by user', async () => {

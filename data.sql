@@ -7,3 +7,4 @@ INSERT INTO orders (user_id, order_status) VALUES (1, 'active');
 INSERT INTO orders (user_id, order_status) VALUES (1, 'active');
 
 INSERT INTO order_products (quantity, order_id, product_id) VALUES (0, 1, 1);
+INSERT INTO order_products (quantity, order_id, product_id) VALUES (0, 1, 1);
