@@ -29,6 +29,29 @@ describe('Orders API Endpoints', () => {
             })               
     })
 
+    it('Add product to order: \'orders/addProduct\' [POST] should create data to db', (done) => {
+        const quantity = '1'
+        const orderId = '1' // already added in data.sql
+        const productId = '1'
+
+        request
+            .post(`/orders/addProduct`)
+            .send({
+                quantity: quantity,
+                order_id: orderId,
+                product_id: productId
+            })
+            .set('Authorization', `bearer ${token_auth}`)
+            .expect(201)
+            .then((res) => {
+                expect(res.body.quantity).to.be.equal(+quantity)
+                return done()
+            })
+            .catch((err) => {
+                throw err
+            })               
+    })
+
     it('Current Order by user \'orders/:id\' [GET] should get current order by user from db', (done) => {
         const userId = '1'; // added in data.sql
         const orderStatus = 'active'

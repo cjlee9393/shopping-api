@@ -66,7 +66,7 @@ const addProduct = async (req: Request, res: Response) => {
         const productId: string = req.body.productId
 
         const result = await store.addProduct(quantity, orderId, productId)
-        res.json(result)
+        res.status(201).json(result)
     }catch(err){
         res.status(400).json(err);
     }
@@ -85,7 +85,7 @@ const orders_routes = (app: express.Application) => {
 	// app.get('/orders', index)
     app.get('/orders/:id', verifyAuthToken, showCurrentOrderByUser)
     app.post('/orders', create)
-    // app.post('/orders/:id/products', addProduct)
+    app.post('/orders/addProduct', verifyAuthToken, addProduct)
     // app.delete('/orders', destroy)
 }
 
