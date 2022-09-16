@@ -32,6 +32,8 @@ The API will be available at http://hostUrl:3000 after running the project
 
       # setup connection to Postgres database
       export ENV='dev' && db-migrate --env dev up
+
+      docker container exec -i $(docker ps --format '{{.Names}}') psql -U ${POSTGRES_USER} ${POSTGRES_DB} < data_dev.sql
       ```
 
    3. running the project
