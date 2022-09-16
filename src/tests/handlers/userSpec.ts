@@ -2,16 +2,20 @@ import { expect } from 'chai';
 import app from '../../server'
 import supertest from 'supertest'
 import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
 
 dotenv.config()
-const token_auth = process.env.TOKEN_AUTH
+const { TOKEN_AUTH, TOKEN_SECRET } = process.env
+const token_auth = TOKEN_AUTH
+const token_secret = TOKEN_SECRET
+
 const request = supertest(app)
 
 describe('Users API Endpoints', () => {
     it('Create: \'users\' [POST] should create data to db', (done) => {
-        const firstName = 'userSpec'
+        const firstName = 'handlersUserSpec'
         const lastName = 'lastName'
-        const username = 'username'
+        const username = 'handlersUserSpec'
         const password = 'password_digest'
 
         request
@@ -25,7 +29,8 @@ describe('Users API Endpoints', () => {
             .set('Authorization', `bearer ${token_auth}`)
             .expect(201)
             .then((res) => {
-                expect(res.body.first_name).to.equal(firstName)
+                const decoded = jwt.verify(res.body.token_auth as string, token_secret as string)
+                expect((decoded as any).user.first_name).to.equal(firstName)
                 return done()
             })
             .catch((err) => {

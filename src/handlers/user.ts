@@ -52,7 +52,9 @@ const create = async (req: Request, res: Response) => {
         };
 
         const result = await store.create(user as User)
-        res.status(201).json(result)
+        const token_auth = await store.authenticate(req.body.username, req.body.password)
+
+        res.status(201).json({token_auth: token_auth})
     }catch(err){
         res.status(400).json(err);
     }

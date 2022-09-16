@@ -18,8 +18,8 @@
     Authorization: Bearer <TOKEN_AUTH>
 
     {
-    "name": "foobar",
-    "price": 64
+        "name": "foobar",
+        "price": 64
     }
     ```
 
@@ -43,10 +43,10 @@
     Authorization: Bearer <TOKEN_AUTH>
 
     {
-    "first_name": "foo",
-    "last_name": "bar",
-    "username": "foobar",
-    "password": "baz"
+        "first_name": "foo",
+        "last_name": "bar",
+        "username": "foobar",
+        "password": "baz"
     }
     ```
 

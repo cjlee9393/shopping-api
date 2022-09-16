@@ -1,5 +1,5 @@
 import { UserStore } from '../../models/user';
-import { expect } from 'chai';
+import { expect, assert } from 'chai';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 
@@ -31,9 +31,9 @@ describe("User Store Model", () => {
     });
 
     it('should create data to db', async () => {
-        const first_name = 'userSpec'
+        const first_name = 'modelsUserSpec'
         const last_name = 'last_name'
-        const username = 'username'
+        const username = 'modelsUserSpec'
         const password = 'password_digest'
 
         const result = await store.create({
@@ -45,6 +45,26 @@ describe("User Store Model", () => {
         });
         
         expect(result.first_name).to.equal(first_name);
+    });
+
+    it('should not create data to db if username already exists', async () => {
+        const first_name = 'first_name'
+        const last_name = 'last_name'
+        const username = 'username'
+        const password = 'password_digest'
+
+        try{
+            await store.create({
+                id: '',
+                first_name: first_name,
+                last_name: last_name,
+                username: username,
+                password: password
+            })
+            assert.fail(0, 1, 'UsernameAlreadyExistError not thrown')
+        }catch(err){
+            expect((err as Error).name).to.be.equal('UsernameAlreadyExistError')
+        }      
     });
 
     it('should index data from db', async () => {

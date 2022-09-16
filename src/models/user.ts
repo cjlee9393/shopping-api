@@ -51,12 +51,25 @@ export class UserStore {
     }
     
       async create(user: User): Promise<User> {
+        // check UsernameAlreadyExistError
+        const conn = await Client.connect()
+        const sql = 'SELECT * FROM users WHERE username=($1)'
+
+        const result = await conn.query(sql, [user.username])
+
+        if (result.rows.length > 0){
+            const err = new Error()
+            err.message = 'username should not be already exist'
+            err.name = 'UsernameAlreadyExistError'
+            throw err
+        }
+
+        // create
         try {
             const hash = bcrypt.hashSync(user.password + pepper, parseInt(saltRounds as string));
 
             const sql = 'INSERT INTO users (first_name, last_name, username, password_digest) VALUES($1, $2, $3, $4) RETURNING *'
             // @ts-ignore
-            const conn = await Client.connect()
     
             const result = await conn.query(sql, [user.first_name, user.last_name, user.username, hash])
     
