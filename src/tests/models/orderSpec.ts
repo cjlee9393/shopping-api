@@ -57,37 +57,12 @@ describe("Order Store Model", () => {
     });
 
     it('should add product to order', async () => {
-        const userResult = await userStore.create({
-            id: '',
-            first_name: 'first_name',
-            last_name: 'last_name',
-            username: 'username',
-            password: 'password_digest',
-        });
-        const userId = userResult.id;
-
-        const orderResult = await orderStore.create({
-            id: '',
-            order_status: 'active',
-            user_id: userId as string
-        });
-        const orderId = orderResult.id;
-
-        const productResult = await productStore.create({
-            id: '',
-            name: 'name',
-            price: 0
-        });
-        const productId = productResult.id;
+        const orderId = '1';
+        const productId = '1';
 
         const quantity = 1;
         const addProductResult = await orderStore.addProduct(quantity, orderId, productId);
         expect(addProductResult.quantity).to.equal(quantity);
-
-        const orderProductId = addProductResult.id;
-        await orderStore.delProduct(`${orderProductId}`);
-        await orderStore.delete(`${orderId}`); 
-        await userStore.delete(`${userId}`);
     });
 
     it('should show current order by user', async () => {

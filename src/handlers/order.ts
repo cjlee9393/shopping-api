@@ -1,6 +1,12 @@
 import { Order, OrderStore } from '../models/order'
 import express, { Request, Response } from 'express'
 import { verifyAuthToken } from './user'
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
+
+dotenv.config();
+const { TOKEN_SECRET } = process.env
+const secretToken = TOKEN_SECRET;
 
 const store = new OrderStore()
 
@@ -24,13 +30,20 @@ const show = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
     try{
+        const authorizationHeader = req.headers.authorization
+        const token = authorizationHeader?.split(' ')[1]
+
+        const decoded = jwt.verify(token as string, secretToken as string)
+        const userId = (decoded as any).user.user_id
+        const orderStatus = 'active'
+
         const order = {
-            order_status: req.body.status,
-            user_id: req.body.user_id
+            user_id: userId,
+            order_status: orderStatus,
         };
 
         const result = await store.create((order as Order))
-        res.json(result)
+        res.status(201).json(result)
     }catch(err){
         res.status(400).json(err);
     }
@@ -71,7 +84,7 @@ const showCurrentOrderByUser = async (req: Request, res: Response) => {
 const orders_routes = (app: express.Application) => {
 	// app.get('/orders', index)
     app.get('/orders/:id', verifyAuthToken, showCurrentOrderByUser)
-    // app.post('/orders', create)
+    app.post('/orders', create)
     // app.post('/orders/:id/products', addProduct)
     // app.delete('/orders', destroy)
 }
